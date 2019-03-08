@@ -1,0 +1,83 @@
+<style>
+.searchbar{
+  margin: 0 10px;
+}
+.searchbar input{
+  border: 1px solid #cccccc;
+width: 100%;
+padding: 10px;
+margin: 10px 0;
+padding-left: 40px;
+padding-right: 35px;
+}
+.search_name {
+    width: 89%;
+    display: table-cell;
+    padding-left: 5px;
+    vertical-align: middle;
+}
+.loading-overlay.search_loader > .loading_search > img {
+    left: 48%;
+  }
+.search_list {
+    background: #fff;
+    position: relative;
+    top: 0px;
+  }
+  .search_input{position: relative;}
+  .back_icon{
+    padding: 13px 10px;
+    display: inline-block;
+    position: absolute;
+    top: 11px;
+    left: 1px;
+    background: #a6ce39;
+    height: 41px;
+    color: #fff;
+  }
+  .search_icon{
+    padding: 13px 10px;
+    display: inline-block;
+    position: absolute;
+    top: 11px;
+    right: 1px;
+    height: 41px;
+    color: #a6ce39;
+  }
+</style>
+
+<div class="searchbar" ng-controller = "searchresult" >
+  <div class="search_input">
+    <span class="back_icon" ng-click="back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></span>
+  <input type="text" name="search" ng-model="search" ng-keyup="searchbar()"/>
+  <span class="search_icon"><i class="fa fa-search" aria-hidden="true" ng-click="searchtoproducts(search)"></i></span>
+</div>
+  <ul class="search_list">
+
+      <!-- <li ng-if="enableDiv">
+          Showing result for "{{search}}" {{total_record}} records found
+      </li> -->
+      <li class="search_list_li" ng-repeat="x in searchresult" ng-click="product_view(x.pid)" ng-if="enableDiv">
+          <div class="search_img" ng-if= "x.pimage">
+              <img src="{{x.pimage}}">
+          </div>
+          <div class="search_img" ng-if= "!x.pimage">
+              <img src="assets/img/product_placeholder1.png">
+          </div>
+          <div class="search_name"><span>{{x.product_name |limitTo : 35}}{{x.product_name.length
+                  > 35 ? '...' : ''}}</span></div>
+      </li>
+
+      <li class="search_list_li" ng-if="resultstatus">
+          <div class="search_name" style="width: 100%; padding-left: 5px;display: block;text-align: center"><span>Typing</span>
+              <img src="img/loading21.gif" alt="" style="height: 6px;"></div>
+      </li>
+      <li class="search_list_li" ng-if="datanotfound">
+          <div class="search_name" style="    width: 100%;padding-left: 5px; display: block; text-align: center"><span>Not
+                  Found </span><br>
+              <img src="img/notfoundemogi.gif" alt="" style="height: 25px;">
+          </div>
+      </li>
+
+  </ul>
+</div>
