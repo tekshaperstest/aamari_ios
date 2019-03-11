@@ -21,35 +21,42 @@ app.controller('otp', function ($scope, $http, $location, $cookieStore, $timeout
 
     }
 
-    $('#first').keyup(function(){
-        //    console.log(Number.isInteger($scope.first));
-           if(Number.isInteger($scope.first)){
-            $("#second").focus();  
-           }else{
-            $scope.first ='';
-               alert("Please Enter Valid Otp")
-           }
-        })
-    
-        $('#second').keyup(function(){
-        //    console.log(Number.isInteger($scope.first));
-           if(Number.isInteger($scope.second)){
-            $("#third").focus();  
-           }else{
-               alert("Please Enter Valid Otp")
-           }
-        })
+    $('#first').keyup(function () {
+        // console.log(isNaN(parseInt($(this).val())));
 
+        var i = $(this).val().toString();
+       // console.log(i.length)
+        if (isNaN(parseInt($(this).val()))) {
+            $scope.first = '';
+            $(this).val('');
+            alert("Enter Valid OTP")
+        }else{
+            if(i.length > 4){
+                var inputString = $(this).val();
+                var shortenedString = inputString.substr(0,(inputString.length -1));
+                $(this).val(shortenedString);
+                alert("OTP Should be 4 Digits")
+            }else{
+                // return;
+            }
+        } 
+    })
+    
+    
+    
+    
+    
     $scope.otpVerification = function (form) {
+        console.log($scope.first)
         if ($scope[form].$error) {
             var error_str = '';
-            
-            if ($scope[form].first.$error.required !== undefined || $scope[form].second.$error.required !== undefined || $scope[form].third.$error.required !== undefined || $scope[form].fourth.$error.required !== undefined) { 
+
+            if ($scope[form].first.$error.required !== undefined) {
                 error_str += "OTP is Required ";
                 alert(error_str);
                 return false;
             }
-            if($scope[form].first.$error.number || $scope[form].second.$error.number || $scope[form].third.$error.number ||$scope[form].fourth.$error.number){
+            if ($scope[form].first.$error.number) {
                 error_str += "Please Enter Valid Otp";
                 alert(error_str);
                 return false;
@@ -64,21 +71,21 @@ app.controller('otp', function ($scope, $http, $location, $cookieStore, $timeout
         };
         if ($scope[form].$valid) {
 
-            if ($scope.first.toString().length > 1 || $scope.second.toString().length > 1 || $scope.third.toString().length > 1 || $scope.fourth.toString().length > 1) {
-                alert('OTP must be 1 Digits allowed in every box')
+            if ($scope.first.toString().length > 4 || $scope.first.toString().length < 4) {
+                alert("OTP Should be 4 Digits")
                 return false;
             }
-/* 
-            if (!jQuery.isEmptyObject($scope.third)) {
-                error_str += "OTP Number";
-                error_str = "<span style='font-weight:700;'> Following field must have valid information:</span><br/>" + error_str;
-                alert(error_str);
-                // alert(error_str)
-                return false;
-            }
- */
+            /* 
+                        if (!jQuery.isEmptyObject($scope.third)) {
+                            error_str += "OTP Number";
+                            error_str = "<span style='font-weight:700;'> Following field must have valid information:</span><br/>" + error_str;
+                            alert(error_str);
+                            // alert(error_str)
+                            return false;
+                        }
+             */
             // return false;
-            $scope.otpcode = ($scope.first) + "" + ($scope.second) + "" + ($scope.third) + "" + ($scope.fourth);
+            $scope.otpcode = ($scope.first);
             console.log($scope.otpcode);
             loading.active();
 
@@ -111,7 +118,7 @@ app.controller('otp', function ($scope, $http, $location, $cookieStore, $timeout
 
 
                 } else {
-                    
+
                     alert('Please Enter Valid Otp')
                 }
 

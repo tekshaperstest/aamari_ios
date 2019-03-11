@@ -21,16 +21,21 @@ app.controller('otp', function ($scope, $http, $location, $cookieStore, $timeout
 
     }
 
+    $('#first').keyup(function(){
+
+    })
+
+
     $scope.otpVerification = function (form) {
         if ($scope[form].$error) {
             var error_str = '';
             
-            if ($scope[form].first.$error.required !== undefined || $scope[form].second.$error.required !== undefined || $scope[form].third.$error.required !== undefined || $scope[form].fourth.$error.required !== undefined) { 
+            if ($scope[form].first.$error.required !== undefined ) { 
                 error_str += "OTP is Required ";
                 alert(error_str);
                 return false;
             }
-            if($scope[form].first.$error.number || $scope[form].second.$error.number || $scope[form].third.$error.number ||$scope[form].fourth.$error.number){
+            if($scope[form].first.$error.number){
                 error_str += "Please Enter Valid Otp";
                 alert(error_str);
                 return false;
