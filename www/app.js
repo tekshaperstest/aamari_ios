@@ -883,7 +883,7 @@ $rootScope.Filtering = function (id) {
         currentUrl = currentUrl.split('/')[1];
         console.log(currentUrl)
         // $rootScope.ChangeRoute = currentUrl.split('/')[1];
-        if (currentUrl !== "" && currentUrl !== "login" && currentUrl !== "forgot" && currentUrl !== "splash" && currentUrl !== "otp") {
+        if (currentUrl !== "" && currentUrl !== "store"  && currentUrl !== "login" && currentUrl !== "forgot" && currentUrl !== "splash" && currentUrl !== "otp") {
 
             $rootScope.usercartvalue()
         }

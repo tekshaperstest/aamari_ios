@@ -238,6 +238,84 @@ app.controller('home', function ($scope, $http, $location, $cookieStore, $timeou
 
     }
 
+    $scope.footer_brand = function () {
+      
+        return  $http({
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                method: 'POST',
+                url: app_url + '/bannerapi/brand_footer',
+                //data : args
+            })
+        }
+
+
+        
+    var footer_brand = $scope.footer_brand();
+    footer_brand.then(function (response) {
+        //loading.deactive();
+        res = response;
+        console.log(response);
+        if (res.data.status == 'success') {
+            
+            $scope.footerbrands = res.data.data;
+            $scope.catdata = res.data.data[0];
+            $scope.slickConfig3Loaded = true;
+            $scope.slickConfig3 = {
+              method: {},
+              dots: false,
+              infinite: true,
+              speed: 500,
+               autoplay:true,
+               autoplaySpeed:3000,
+               arrows:false,
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              margin:true,
+              responsive: [
+                {
+                  breakpoint: 1024,
+                  settings: {
+                    slidesToShow: 1,
+                    infinite: true,
+                    dots: false,
+                  }
+                },
+                {
+                  breakpoint: 600,
+                  settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                  }
+                },
+                {
+                  breakpoint: 480,
+                  settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                  }
+                },
+                {
+                  breakpoint: 360,
+                  settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                  }
+                }
+              ]
+            };
+        } else {
+           //alert('Something went wrong');
+        }  
+        setTimeout(function(){
+            $scope.loading_hit = 0;
+            loading.deactive();
+
+        },1500);
+    })
+
+
 
     $scope.getOffers = function () {
         return $http({
@@ -249,6 +327,8 @@ app.controller('home', function ($scope, $http, $location, $cookieStore, $timeou
 
         })
     }
+
+   
 
      $scope.homecategory = function () {
 
