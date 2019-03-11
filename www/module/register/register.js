@@ -5,13 +5,20 @@ app.controller('user_register', function ($rootScope, $scope, $http, $location, 
         $location.path('/dashboard/home');
     }
 
+    $rootScope.referral_code = '';
+    $rootScope.referral_id = '';
+    $scope.codeapplied = 0;
+
 
     $scope.terms = function () {
         var regdata = {
             fname:$scope.fname,
             mob_number:$scope.mob_number,
             email:$scope.email,
-            conditions:$scope.term_conditions
+            conditions:$scope.term_conditions,
+            referral_code : $rootScope.referral_code,
+            referral_id : $rootScope.referral_id
+
         }
         $cookieStore.put('regdata',regdata)
 
@@ -23,6 +30,12 @@ app.controller('user_register', function ($rootScope, $scope, $http, $location, 
         $scope.mob_number = $cookieStore.get('regdata').mob_number
         $scope.email = $cookieStore.get('regdata').email
         $scope.term_conditions = $cookieStore.get('regdata').conditions
+        $rootScope.referral_code = $cookieStore.get('regdata').referral_code
+        $rootScope.referral_id = $cookieStore.get('regdata').referral_id
+        }
+
+        if($rootScope.referral_id != ''){
+            $scope.codeapplied = 1;
         }
 
     if ($cookieStore.get('newregister') != '' || $cookieStore.get('newregister') != undefined) {
@@ -31,6 +44,48 @@ app.controller('user_register', function ($rootScope, $scope, $http, $location, 
             $scope.mob_number = $cookieStore.get('newregister').mobile;
         }
     }
+
+
+    $scope.checkrefferal = function(referral_code){
+       
+        if(referral_code == '' || referral_code == undefined){
+            alert('Please enter a Referral Code');
+            return false;
+        }
+
+        $rootScope.referral_code = referral_code;
+
+        var args = $.param({
+            referral_code: referral_code,
+            
+        });
+        loading.active();
+            $http({
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                method: 'POST',
+                url: app_url + '/loginapi/verifyrefcode',
+                data: args //forms user object
+
+            }).then(function (response) {
+
+                res = response;
+
+                if (res.data.status == 'invalid') {
+                    $scope.codeapplied = 0;
+                    alert('Invalid Referral Code');
+                } else {
+                   $rootScope.referral_id = res.data.referral_codes;
+                   $scope.codeapplied = 1;
+                   $('#referral').attr('disabled',true);
+                }
+            }).finally(function () {
+                loading.deactive();
+            })
+    }
+
+
 
     $scope.user_registers = function (form) {
 
@@ -125,7 +180,8 @@ app.controller('user_register', function ($rootScope, $scope, $http, $location, 
                 user_mob: $scope.mob_number,
                 user_password: $scope.password,
                 user_ip: ipAddress,
-                login_type: device_type
+                login_type: device_type,
+                referral_id : $rootScope.referral_id
             });
             loading.active();
             $http({
@@ -149,6 +205,7 @@ app.controller('user_register', function ($rootScope, $scope, $http, $location, 
                         'mobile': $scope.mob_number,
                         'uid': res.data.uid,
                         'status':res.data.status,
+                        'referral_id' : $rootScope.referral_id,
                         'from': 'register'
                     }
                     $cookieStore.put('otpverification', setOTPCookies);
