@@ -21,6 +21,10 @@ app.controller('otp', function ($scope, $http, $location, $cookieStore, $timeout
 
     }
 
+    $('#first').click(function(){
+        alert('Hello');
+    })
+    
     $scope.otpVerification = function (form) {
         if ($scope[form].$error) {
             var error_str = '';
