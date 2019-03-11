@@ -21,10 +21,25 @@ app.controller('otp', function ($scope, $http, $location, $cookieStore, $timeout
 
     }
 
-    $('#first').click(function(){
-        alert('Hello');
-    })
+    $('#first').keyup(function(){
+        //    console.log(Number.isInteger($scope.first));
+           if(Number.isInteger($scope.first)){
+            $("#second").focus();  
+           }else{
+            $scope.first ='';
+               alert("Please Enter Valid Otp")
+           }
+        })
     
+        $('#second').keyup(function(){
+        //    console.log(Number.isInteger($scope.first));
+           if(Number.isInteger($scope.second)){
+            $("#third").focus();  
+           }else{
+               alert("Please Enter Valid Otp")
+           }
+        })
+
     $scope.otpVerification = function (form) {
         if ($scope[form].$error) {
             var error_str = '';
