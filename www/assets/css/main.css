@@ -738,7 +738,8 @@ li.menu_search_container a input{
 /* Bof ---- home Section    */
 #banner_slider{margin-top: 27px;}
 .ng-scope.slick-slide > img{
-    width:100% !important;
+    /* width:100% !important; */
+    width: 65% !important;
 }
 .search-container{margin-top: 95px !important;}
 #banner_slider .banner-img{width: 100%;	}
