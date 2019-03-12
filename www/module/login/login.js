@@ -36,6 +36,7 @@ app.controller('login', function ($scope, $http, $location, $cookieStore, model,
     }
 
     // $scope.mobile_no = '8299334781';
+    $scope.varified_status = 'notverified';
     $scope.phoneVerifiedStatus = false;
     $scope.loginuser = function (form) {
         var res = '';
