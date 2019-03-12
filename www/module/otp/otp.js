@@ -92,6 +92,7 @@ app.controller('otp', function ($scope, $http, $location, $cookieStore, $timeout
 
             var args = $.param({
                 uid: $cookieStore.get('otpverification').uid,
+                referral_id: $cookieStore.get('otpverification').referral_id,
                 otp: $scope.otpcode,
             });
 
