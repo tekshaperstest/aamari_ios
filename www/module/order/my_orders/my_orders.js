@@ -8,7 +8,7 @@ app.controller('myorders', function ($scope, $http, $location, $cookieStore, mod
 
     var GlobalUID = $cookieStore.get('userinfo').uid; //Global Uid for get the response by sending the http request.
 
-    $rootScope.initOneSignal();
+    //$rootScope.initOneSignal();
     loading.deactive();
 
     $scope.home = function () {
@@ -30,6 +30,7 @@ app.controller('myorders', function ($scope, $http, $location, $cookieStore, mod
      */
 
     var inithit = false
+    $scope.myorders = ''
     $scope.ordersInit = function () {
 
         loading.active();
@@ -45,13 +46,13 @@ app.controller('myorders', function ($scope, $http, $location, $cookieStore, mod
         }).then(function (response) {
 
             res = response;
+            console.log(res.data)
 
             if (res.data.status == 'success') {
 
                 //put cookie and redirect it    
                 //model.show('Alert', res.data.status);
                 //console.log(res.data);
-                
                 if (res.data.orders.length > 0) {
                     $scope.myorders = res.data.orders;
                     console.log($scope.myorders.length);

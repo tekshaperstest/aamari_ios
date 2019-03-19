@@ -179,6 +179,8 @@ app.config(function ($routeProvider, $httpProvider) {
         }).when("/contact_us", {
             templateUrl: "module/cms/contact_us/contact_us.html"
 
+        }).when("/myrewards", {
+            templateUrl: "module/myreward/myreward.html"
         })
 
 });

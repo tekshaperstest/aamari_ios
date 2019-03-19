@@ -41,6 +41,11 @@ app.controller('myaccount', function ($scope, $http, $location, $interval, $root
 
     }
 
+    $scope.myrewards = function () {
+        $location.path('/myrewards')
+    }
+
+
     $scope.change_password = function () {
         $location.path('/changepassword');
 
